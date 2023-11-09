@@ -35,10 +35,6 @@ public class NewUserServlet extends HttpServlet {
 
 		String username = Validator.validString(request
 				.getParameter("username"));
-		String password = Validator.validString(request
-				.getParameter("password"));
-		String confirmedPassword = Validator.validString(request
-				.getParameter("confirm_password"));
 		String firstName = Validator.validString(request
 				.getParameter("first_name"));
 		String lastName = Validator.validString(request
@@ -47,6 +43,17 @@ public class NewUserServlet extends HttpServlet {
 				.getParameter("mobile_phone"));
 		String preferredDict = Validator.validString(request
 				.getParameter("dicturl"));
+
+		String password = request.getParameter("password");
+		String confirmedPassword = request.getParameter("confirm_password");
+		boolean validPassword1 = Validator.validPassword(password);
+		boolean validPassword2 = Validator.validPassword(confirmedPassword);
+
+		if(!(validPassword1 && validPassword2)) {
+			request.setAttribute("message", "Invalid password!");
+			request.getRequestDispatcher("newuser.jsp").forward(request,
+					response);
+		}
 
 		AppUser user = null;
 		if (password.equals(confirmedPassword)) {
