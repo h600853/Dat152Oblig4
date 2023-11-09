@@ -13,7 +13,7 @@ public class AppUserDAO {
 
   public AppUser getAuthenticatedUser(String username, String password) {
 
-    String hashedPassword = Crypto.generateMD5Hash(password);
+    String hashedPassword = Crypto.generateSHA256(password);
 
     String sql = "SELECT * FROM SecOblig.AppUser" 
         + " WHERE username = '" + username + "'"
@@ -170,7 +170,7 @@ public class AppUserDAO {
   
   public boolean updateUserPassword(String username, String passwordnew) {
 	  
-	  String hashedPassword = Crypto.generateMD5Hash(passwordnew);
+	  String hashedPassword = Crypto.generateSHA256(passwordnew);
 	  
 	    String sql = "UPDATE SecOblig.AppUser "
 	    		+ "SET passhash = '" + hashedPassword + "' "

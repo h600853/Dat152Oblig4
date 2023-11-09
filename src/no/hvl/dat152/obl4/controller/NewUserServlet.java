@@ -60,7 +60,7 @@ public class NewUserServlet extends HttpServlet {
 
 			AppUserDAO userDAO = new AppUserDAO();
 
-			user = new AppUser(username, Crypto.generateMD5Hash(password),
+			user = new AppUser(username, Crypto.generateSHA256(password),
 					firstName, lastName, mobilePhone, Role.USER.toString());						
 
 			successfulRegistration = userDAO.saveUser(user);

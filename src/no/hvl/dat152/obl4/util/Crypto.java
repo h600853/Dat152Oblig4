@@ -21,8 +21,9 @@ public class Crypto {
 		return UUID.randomUUID().toString();
 	}
 	
-	public static String generateMD5Hash(String value) {
-		return DigestUtils.md5Hex(value);
+	public static String generateSHA256(String value) {
+
+		return DigestUtils.sha256Hex(value);
 	}
 	
 	public static String generateSHA1Hash(String value) {
