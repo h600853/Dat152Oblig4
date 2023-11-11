@@ -12,7 +12,7 @@
 	<p><a href="mydetails">My personal details and search history</a></p>
 	<form action="dosearch" method="get">
 		<input type="hidden" name="user" value="${user.username}" /> 
-		<p>Dictionary search (enter word, e.g. Car): 
+		<p>Dictionary search (enter word, e.g. Car):
 			<input type="text" name="searchkey" />
 			<input type="submit" value="Go!"/></p>
 	</form>

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h3>Search Results</h3>
-	<p><b>Search key: "${searchkey}"</b></p>
+	<p><b>Search key: <c:out value="${searchkey}" /></b></p>
 	<c:forEach var="entry" items="${result}">
 		<p>${entry}</p>
 	</c:forEach><br>
