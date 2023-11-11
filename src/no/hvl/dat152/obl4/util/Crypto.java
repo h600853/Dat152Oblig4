@@ -7,6 +7,7 @@ package no.hvl.dat152.obl4.util;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import java.util.Base64;
 import java.util.UUID;
 
 import javax.xml.bind.DatatypeConverter;
@@ -22,13 +23,13 @@ public class Crypto {
 	}
 	
 	public static String generateSHA256(String value) {
-
-		return DigestUtils.sha256Hex(value);
+		//the database can only store 50 characters
+		return DigestUtils.sha256Hex(value).substring(0, 50);
 	}
 	
 	public static String generateSHA1Hash(String value) {
 		
-		return DigestUtils.sha1Hex(value);
+		return DigestUtils.md5Hex(value);
 	}
 	
 	public static String generateRandomCryptoCode() {

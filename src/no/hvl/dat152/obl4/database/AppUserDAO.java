@@ -1,8 +1,6 @@
 package no.hvl.dat152.obl4.database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,46 +9,46 @@ import no.hvl.dat152.obl4.util.Crypto;
 
 public class AppUserDAO {
 
-  public AppUser getAuthenticatedUser(String username, String password) {
+	public AppUser getAuthenticatedUser(String username, String password) {
 
-    String hashedPassword = Crypto.generateSHA256(password);
+		String hashedPassword = Crypto.generateSHA256(password);
+		AppUser user = null;
+		Connection c = null;
+		PreparedStatement statement = null;
+		ResultSet r = null;
 
-    String sql = "SELECT * FROM SecOblig.AppUser" 
-        + " WHERE username = '" + username + "'"
-        + " AND passhash = '" + hashedPassword + "'";
-    
-    
-    AppUser user = null;
+		try {
+			c = DatabaseHelper.getConnection();
 
-    Connection c = null;
-    Statement s = null;
-    ResultSet r = null;
 
-    try {        
-      c = DatabaseHelper.getConnection();
-      s = c.createStatement();       
-      r = s.executeQuery(sql);
+			statement = c.prepareStatement("SELECT * FROM SecOblig.AppUser WHERE username = ? AND passhash = ?");
 
-      if (r.next()) {
-        user = new AppUser(
-            r.getString("username"),
-            r.getString("passhash"),
-            r.getString("firstname"),
-            r.getString("lastname"),
-            r.getString("mobilephone"),
-            r.getString("role"));
-      }
+			statement.setString(1, username);
+			statement.setString(2, hashedPassword);
 
-    } catch (Exception e) {
-      System.out.println(e);
-    } finally {
-      DatabaseHelper.closeConnection(r, s, c);
-    }
+			r = statement.executeQuery();
 
-    return user;
-  }
-  
-  public String getUserClientID(String mobilephone) {
+			if (r.next()) {
+				user = new AppUser(
+						r.getString("username"),
+						r.getString("passhash"),
+						r.getString("firstname"),
+						r.getString("lastname"),
+						r.getString("mobilephone"),
+						r.getString("role"));
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			DatabaseHelper.closeConnection(r, statement, c);
+		}
+
+		return user;
+	}
+
+
+	public String getUserClientID(String mobilephone) {
 
     String sql = "SELECT clientId FROM SecOblig.AppUser" 
         + " WHERE mobilephone = '" + mobilephone + "'";
