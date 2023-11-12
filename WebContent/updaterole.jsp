@@ -17,7 +17,7 @@
 		<p>
 		<select name="username">
 			<c:forEach var="username" items="${usernames}">
-				<option value="${username}">${username}</option>
+				<option value="${username}"><c:out value="${username}"/></option>
 			</c:forEach>
 		</select>
 		<p>

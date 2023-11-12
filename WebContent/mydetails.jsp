@@ -35,6 +35,6 @@
 	<p><a href="searchpage">Back to Main search page</a></p>
 	<p><a href="updatepassword">Update Password</a></p>
 	<p>${updaterole}</p>
-	<p><b>You are logged in as ${user.username}. <a href="logout">Log out</a></b></p>
+	<p><b>You are logged in as <c:out value="${user.username}"/>. <a href="logout">Log out</a></b></p>
 </body>
 </html>
