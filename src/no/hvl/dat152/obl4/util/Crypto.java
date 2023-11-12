@@ -23,8 +23,8 @@ public class Crypto {
 	}
 	
 	public static String generateSHA256(String value) {
-		//the database can only store 50 characters
-		return DigestUtils.sha256Hex(value).substring(0, 50);
+
+		return DigestUtils.sha256Hex(value);
 	}
 	
 	public static String generateSHA1Hash(String value) {

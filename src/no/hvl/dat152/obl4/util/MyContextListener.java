@@ -38,7 +38,7 @@ public class MyContextListener implements ServletContextListener {
       try {
        st.executeUpdate("create table SecOblig.AppUser ("
            + "username VARCHAR(50) UNIQUE,"
-           + "passhash VARCHAR(50),"
+           + "passhash VARCHAR(256),"
            + "firstname VARCHAR(50),"
            + "lastname VARCHAR(50),"
            + "mobilephone VARCHAR(20),"
@@ -64,9 +64,10 @@ public class MyContextListener implements ServletContextListener {
       
       // insert default admin user (username=admin (password=md5("password")))
       try {
-          st.executeUpdate("INSERT INTO SecOblig.AppUser VALUES "
-          		+ "('admin', '5f4dcc3b5aa765d61d8327deb882cf99','Admin', 'SuperUser', '120389734562',"
-        		  +"'"+Role.ADMIN.toString()+"')");
+       String hashedPassword = Crypto.generateSHA256("password");
+        st.executeUpdate("INSERT INTO SecOblig.AppUser VALUES "
+                + "('admin', '" + hashedPassword + "', 'Admin', 'SuperUser', '120389734562', '"
+                + Role.ADMIN.toString() + "')");
 
           System.out.println("Default admin user \"admin\" created...");
 
