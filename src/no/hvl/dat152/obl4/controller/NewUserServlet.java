@@ -72,6 +72,7 @@ public class NewUserServlet extends HttpServlet {
 			dicturlCookie.setMaxAge(60*10);
 			response.addCookie(dicturlCookie);
 
+
 			response.sendRedirect("searchpage");
 
 		} else {

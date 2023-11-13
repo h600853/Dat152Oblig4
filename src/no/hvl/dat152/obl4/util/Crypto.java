@@ -12,7 +12,11 @@ import java.util.UUID;
 
 import javax.xml.bind.DatatypeConverter;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.digest.DigestUtils;
+
+import static java.util.Base64.*;
+import static org.apache.commons.codec.binary.Base64.encodeBase64URLSafeString;
 
 
 public class Crypto {
@@ -44,6 +48,14 @@ public class Crypto {
 		sr.nextBytes(ivsecret);
 		
 		return DatatypeConverter.printHexBinary(ivsecret);
+	}
+	public static String generateCSRFtoken(HttpServletRequest request) {
+		SecureRandom sr = new SecureRandom();
+		byte[] csrf = new byte[16];
+		sr.nextBytes(csrf);
+		String token = encodeBase64URLSafeString(csrf);
+		request.getSession().setAttribute("csrftoken", token);
+		return token;
 	}
 
 

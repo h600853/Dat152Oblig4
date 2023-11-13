@@ -25,8 +25,9 @@
 	<tr><td><p>New Role </td></tr>
 	<tr><td><input type="radio" name="role" value="USER">USER<br></td></tr>
 	<tr><td><input type="radio" name="role" value="ADMIN" checked="checked">ADMIN<br></td></tr>
-	
-	<tr>	
+	<input type="hidden" name="csrf" value="${csrftoken}"/>
+	<tr>
+
 		<td><p><input type="submit" value="Update Role"/></p></td>
 	</tr>
 	</table>

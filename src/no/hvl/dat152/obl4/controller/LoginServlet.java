@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import no.hvl.dat152.obl4.database.AppUser;
 import no.hvl.dat152.obl4.database.AppUserDAO;
+import no.hvl.dat152.obl4.util.Crypto;
 import no.hvl.dat152.obl4.util.Role;
 
 @WebServlet("/login")
@@ -31,6 +32,8 @@ public class LoginServlet extends HttpServlet {
 		if (successfulLogin) {
 			
 			// forward user to searchpage
+			String s = Crypto.generateCSRFtoken(request);
+			System.out.println("CSRF token: "+s);
 			request.getRequestDispatcher("searchpage").forward(request, response);
 			
 		} else {

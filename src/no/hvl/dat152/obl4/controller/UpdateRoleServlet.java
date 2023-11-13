@@ -1,5 +1,6 @@
 package no.hvl.dat152.obl4.controller;
 
+import java.io.Console;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
@@ -39,18 +40,24 @@ public class UpdateRoleServlet extends HttpServlet {
 				.getParameter("username"));
 		String newrole = Validator.validString(request
 				.getParameter("role"));
-		
+
+		String csrftoken = request.getParameter("csrf");
+		if(csrftoken == null) csrftoken = "";
+		String sessiontoken = (String) request.getSession().getAttribute("csrftoken");
+
 		AppUser user = (AppUser) request.getSession().getAttribute("user");
+
+
 		
 		if(username != null) {
 			
-			if (RequestHelper.isLoggedIn(request) && user.getRole().equals(Role.ADMIN.toString())) {
+			if (RequestHelper.isLoggedIn(request) && user.getRole().equals(Role.ADMIN.toString()) && csrftoken.equals(sessiontoken)) {
 				
 				AppUserDAO userDAO = new AppUserDAO();
 				
 				successfulRoleUpdate = userDAO.updateUserRole(username, newrole);
 				
-				if (successfulRoleUpdate) {
+				if (successfulRoleUpdate ) {
 					
 					response.sendRedirect("mydetails");
 
